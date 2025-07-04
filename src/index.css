@@ -1,0 +1,41 @@
+@import 'tailwindcss'; 
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+body {
+  width: 100%; 
+  margin: 0; 
+}
+
+
+@theme {
+  /* New tile animation */
+  @keyframes blink {
+    0%, 100% { background-color: white; }
+    50% { background-color: #4A148C; }    /* Purple-900 */
+  }
+
+  --animate-blink: blink 300ms ease-in-out 3;
+}
+
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #000;
+    background-color: #fff;
+  }
+}
