@@ -6,7 +6,7 @@ export const useGameStore = create(
       gameStarted: false, 
       gamePaused: false, 
       gameOver: false, 
-      roundTime: 12, 
+      roundTime: 60, 
       mainScore: 0,
       modalVisible: false, 
       modalMessage: "", 
