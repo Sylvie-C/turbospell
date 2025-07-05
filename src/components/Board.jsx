@@ -505,7 +505,7 @@ export default function Board () {
         )
         setModalVisible(true) 
 
-        // setGameOver(true)
+        setGameOver(true)
       }
     } 
 
