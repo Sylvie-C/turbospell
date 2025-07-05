@@ -319,7 +319,7 @@ export default function Board () {
       )
 
       // if no letters left in stock, end game
-      if (availableLettersRef.current.length) setGameOver(true)
+      if (availableLettersRef.current.length === 0) setGameOver(true)
 
       if (spaceLeftRef.current >= NEWTILESNB) {
         const boardAfterTimeout = await addNewTiles(tilesContent , filledTilesRef.current , NEWTILESNB) 
@@ -333,9 +333,7 @@ export default function Board () {
       }
 
       // if timer 00:00 and no more space left for new tiles, game over
-      else { 
-        setGameOver(true) 
-      }
+      else { setGameOver(true) } 
     }
 
   }
@@ -446,7 +444,7 @@ export default function Board () {
   // Handle timer if game paused
   useEffect(() => {
     setFreezeTimer(gamePaused)
-  }, [gamePaused])
+  }, [ gamePaused ])
 
   // Handle tiles move effects on player's clicks
   useEffect(() => { 
@@ -476,11 +474,13 @@ export default function Board () {
         }
       }
     }
-  }, [clickedTiles]) 
+  }, [ clickedTiles ]) 
 
 
   // On timer reset, watch if player wins (no letters left in store)
   useEffect(() => { 
+
+    console.log ("gameOver from 'resetTimer' useEffect ? : " , gameOver)
 
     if (resetTimer) { 
 
@@ -505,7 +505,7 @@ export default function Board () {
         )
         setModalVisible(true) 
 
-        setGameOver(true)
+        // setGameOver(true)
       }
     } 
 
@@ -542,9 +542,8 @@ export default function Board () {
       }
 
       setModalVisible(gameOver)
-
     }
-  }, [gameOver]) 
+  }, [ gameOver ]) 
   
 
   if (!wordsList) return <p>Chargement : un instant svp...</p>
