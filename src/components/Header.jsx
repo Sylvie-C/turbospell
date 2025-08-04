@@ -1,11 +1,22 @@
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.webp'
+import logo_xs from '../assets/logo_92x75.webp'
 
-export default function Header () {
+export default function Header () { 
 
   return (
     <header className="m-2">
 
-        <img className="m-2 w-52 h-40 sm:float-left" src={logo} width="200px" height="164px" alt="logo turbospell" loading="lazy" />
+        <picture>
+          <source media="(max-width: 639px)" srcSet={logo_xs} />
+          <img
+            src={logo}
+            className="float-left m-2 w-[92px] h-[75px] sm:w-[208px] sm:h-[160px]"
+            width="92"
+            height="75"
+            alt="logo turbospell"
+            loading="lazy"
+          />
+        </picture>
 
         <h2 className="text-center sm:text-2xl text-violet-500 underline">RÈGLE DU JEU</h2>
 
