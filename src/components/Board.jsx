@@ -477,7 +477,6 @@ export default function Board () {
         // if destination tile same than start tile, reset
         else if ( clickedTiles.destinationTile.row === clickedTiles.startTile.row 
           && clickedTiles.destinationTile.col === clickedTiles.startTile.col ) { 
-          console.log ("2ème TUILE IDENTIQUE")
           moveReset()
         }
 
