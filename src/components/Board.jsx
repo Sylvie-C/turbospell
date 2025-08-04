@@ -50,7 +50,7 @@ export default function Board () {
   const [ wordsFound , setWordsFound ] = useState (null)
 
   const finalScoreRef = useRef(0)
-  
+
   
   // ------- INNER FUNCTIONS -------
 
@@ -494,7 +494,7 @@ export default function Board () {
           <>
             <p className="text-base sm:text-lg">Bravo ! Vous avez gagné et utilisé toutes les lettres !
               <br/>Votre score est de {finalScoreRef.current} points.<br/>
-              Score total : {mainScore + finalScoreRef.current} points.
+              Total parties : {mainScore + finalScoreRef.current} points.
               <br/>Une autre partie ?
             </p>
             <div className="flex justify-center">
@@ -535,7 +535,7 @@ export default function Board () {
         setModalMessage( 
           <>
             <p className="text-base sm:text-lg">Vous avez perdu. <br/>Votre score est de {finalScoreRef.current} points.<br/>
-            Score Total : {mainScore} points.<br/>
+            Total parties : {mainScore} points.<br/>
             Une autre partie ?</p>
             <div className="flex justify-center">
               <button 
