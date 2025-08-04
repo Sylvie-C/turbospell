@@ -24,9 +24,9 @@ export default function Header () {
           <p>Le but de ce jeu est de former des mots de 5 lettres minimum, en déplaçant des lettres sur le tableau, en 1mn, ce qui permet de comptabiliser des points. </p>
           <p>Si le joueur ne forme aucun mot dans la minute, des lettres apparaissent, mais s'il forme un mot, ses lettres disparaissent.</p>
           <p>Il faut donc accumuler le plus de points possible avant qu'il n'y ait plus de place dans le tableau.</p>
-          <p>Le 1er clic sélectionne la case à déplacer, le 2ème clic la case de destination. 
-          <br/>Attention : un clic sur une lettre ne peut être annulé ! </p>
+          <p>Le 1er clic sélectionne la case à déplacer, le 2ème clic la case de destination.</p>
           <p>Les noms propres ne sont pas autorisés, mais les verbes conjugés oui (mêmes règles qu'au Scrabble). </p>
+          <p>Bonne chance ! :)</p>
         </div>
         <hr className="m-y-2"/>
 
