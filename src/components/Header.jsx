@@ -1,22 +1,22 @@
-import logo from '../assets/logo.webp'
-import logo_xs from '../assets/logo_92x75.webp'
+import logoSmall from '../assets/logo_92x75.webp'
+import logoLarge from '../assets/logo_210x172.webp'
 
 export default function Header () { 
 
   return (
     <header className="m-2">
 
-        <picture>
-          <source media="(max-width: 639px)" srcSet={logo_xs} />
-          <img
-            src={logo}
-            className="float-left m-2 w-[92px] h-[75px] sm:w-[208px] sm:h-[160px]"
-            width="92"
-            height="75"
-            alt="logo turbospell"
-            loading="lazy"
-          />
-        </picture>
+      <img
+        srcSet={`
+          ${logoSmall} 92w,
+          ${logoLarge} 208w,
+        `}
+        sizes="(max-width: 639px) 92px, 208px"
+        src={logoLarge} 
+        className="float-left mt-5 mr-2 w-[92px] h-[75px] sm:w-52 sm:h-40 sm:mt-2"
+        alt="TurboSpell logo"
+        loading="lazy"
+      />
 
         <h2 className="text-center sm:text-2xl text-violet-500 underline">RÈGLE DU JEU</h2>
 
