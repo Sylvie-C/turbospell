@@ -51,6 +51,12 @@ export default function Board () {
 
   const finalScoreRef = useRef(0)
 
+
+  console.log ("click count ? : " , tileClickCountRef.current)
+  console.log ("clicked tiles ? : " , clickedTiles)
+
+
+
   
   // ------- INNER FUNCTIONS -------
 
@@ -345,23 +351,22 @@ export default function Board () {
   const handleTileSelect = (id) => {
 
     tileClickCountRef.current += 1
-
-    const tile2Did = convert1Dto2D ( id , COLS_NB )
+    const tile2Dpos = convert1Dto2D ( id , COLS_NB )
 
     if (tileClickCountRef.current === 1) {
       setClickedTiles(
         prev => ({
           ...prev, 
-          startTile: { row:tile2Did.row , col:tile2Did.col }
+          startTile: { row:tile2Dpos.row , col:tile2Dpos.col }
         })
       )
-    }
+    } 
 
     if (tileClickCountRef.current === 2) { 
       setClickedTiles(
         prev => ({
           ...prev, 
-          destinationTile: { row:tile2Did.row , col:tile2Did.col }
+          destinationTile: { row:tile2Dpos.row , col:tile2Dpos.col }
         })
       ) 
     }
@@ -469,6 +474,13 @@ export default function Board () {
           moveReset()
         }
 
+        // if destination tile same than start tile, reset
+        else if ( clickedTiles.destinationTile.row === clickedTiles.startTile.row 
+          && clickedTiles.destinationTile.col === clickedTiles.startTile.col ) { 
+          console.log ("2ème TUILE IDENTIQUE")
+          moveReset()
+        }
+
         else { 
           onPlayerClicks(clickedTiles , tilesContent , COLS_NB, filledTilesRef.current)
         }
@@ -480,8 +492,6 @@ export default function Board () {
   // On timer reset, watch if player wins (no letters left in store)
   useEffect(() => { 
 
-    console.log ("gameOver from 'resetTimer' useEffect ? : " , gameOver)
-
     if (resetTimer) { 
 
       // if player wins
@@ -489,14 +499,19 @@ export default function Board () {
 
         setModalMessage(
           <>
-            <p>Bravo ! Vous avez gagné et utilisé toutes les lettres !
-              <br/>Votre score est de {finalScoreRef.current} points.
+            <p className="text-base sm:text-lg">Bravo ! Vous avez gagné et utilisé toutes les lettres !
+              <br/>Votre score est de {finalScoreRef.current} points.<br/>
+              Score total : {mainScore + finalScoreRef.current} points.
               <br/>Une autre partie ?
             </p>
             <div className="flex justify-center">
               <button 
                 onClick={ startNewGame } 
-                className="m-2 px-2 hover:cursor-pointer hover:transition-colors hover:bg-violet-300 hover:text-violet-900 bg-violet-900 text-violet-300 border-violet-300 hover:border-violet-900 border-2 rounded-2xl"
+                className="
+                  m-2 px-2 
+                  hover:cursor-pointer hover:transition-colors hover:bg-violet-300 hover:text-violet-900 hover:border-violet-900 
+                  bg-violet-900 text-violet-300 border-violet-300 border-2 rounded-2xl
+                  text-base sm:text-lg"
               >
                 OK
               </button>
@@ -526,11 +541,17 @@ export default function Board () {
       else { 
         setModalMessage( 
           <>
-            <p>Vous avez perdu. <br/>Votre score est de {finalScoreRef.current} points.<br/>Une autre partie ?</p>
+            <p className="text-base sm:text-lg">Vous avez perdu. <br/>Votre score est de {finalScoreRef.current} points.<br/>
+            Score Total : {mainScore} points.<br/>
+            Une autre partie ?</p>
             <div className="flex justify-center">
               <button 
                 onClick={ startNewGame } 
-                className="m-2 px-2 hover:cursor-pointer hover:transition-colors hover:bg-violet-300 hover:text-violet-900 bg-violet-900 text-violet-300 border-violet-300 hover:border-violet-900 border-2 rounded-2xl"
+                className="m-2 px-2 
+                hover:cursor-pointer hover:transition-colors hover:bg-violet-300 hover:text-violet-900 hover:border-violet-900
+                bg-violet-900 text-violet-300 border-violet-300 border-2 rounded-2xl
+                text-base sm:text-lg
+                "
               >
                 OK
               </button>
