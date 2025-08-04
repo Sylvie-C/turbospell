@@ -50,13 +50,7 @@ export default function Board () {
   const [ wordsFound , setWordsFound ] = useState (null)
 
   const finalScoreRef = useRef(0)
-
-
-  console.log ("click count ? : " , tileClickCountRef.current)
-  console.log ("clicked tiles ? : " , clickedTiles)
-
-
-
+  
   
   // ------- INNER FUNCTIONS -------
 
