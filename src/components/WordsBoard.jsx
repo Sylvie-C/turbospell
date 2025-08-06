@@ -1,7 +1,7 @@
 import { useState , useEffect , useRef } from "react"
 
 import { useGameStore } from "../store"
-import { wordScore } from "../utils/functions"
+import { wordScore } from "../utils/wordScore.js"
 
 
 export default function WordsBoard ( { foundWordsObj } ) { 

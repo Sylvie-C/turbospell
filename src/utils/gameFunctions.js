@@ -392,8 +392,13 @@ const findStart = (word , container) => {
   - if multiple existing words found in array, longest one should be retained, 
   - words can be read from right to left (reversed). 
   Params: 
-    - sequenceArray: array of strings (letters or empty)
-  Return: Array of Objects type { at: startIndex (int) , length: found word length (int) }
+  - wordsList: Set of words to search in array,
+  - sequenceArray: array of letters to search in,
+  - sequenceIndexInBoard: index of sequence in main Board (int),
+  - columnSequence: boolean, true if sequence is a column in main Board, false if sequence is a row in main Board. 
+  Return: 
+    - If word found, return object { position: { at: startIndex (int) , length: found word length (int) } }
+    - If no word found, return null.
 */
 const wordInSequence = (wordsList , sequenceArray , sequenceIndexInBoard , columnSequence=false) => { 
 
@@ -488,7 +493,7 @@ const wordInSequence = (wordsList , sequenceArray , sequenceIndexInBoard , colum
 }
 
 
-/* Function to extract columns values from main board, separately in sub-arrays. 
+/* Function to extract values from a board, column by column, in sub-arrays. 
   Params: boardArray (main array of letters) , colsNb: main array columns number (int). 
   Return: 
     - Array of sub-arrays, where main array index are columns numbers. 
@@ -552,6 +557,7 @@ const getRows = (boardArray , colsNb) => {
 
 /* Function to detect words in game board. 
   Params: 
+    - wordsList: Set of words to search in board,
     - boardArray: main <Board/> of letters (String), 
     - colsNb: main board columns number, where equal to rows number. 
   Return: 
@@ -633,24 +639,5 @@ export const foundWordsStr = (wordsList , boardArray , colsNb) => {
   const wordsInCols = foundData?.cols.map( elt => elt?.word )
 
   return { rowsWords: wordsInRows , colsWords: wordsInCols }
-}
-
-
-/* Function to calculate a word score based on Zustand lettersStore data. 
-  Params: word string. 
-  Return: word score (int)
-*/
-export const wordScore = (word) => { 
-  const { lettersStore } = useGameStore.getState()
-
-  const wordArray = word.split('')
-
-  let score = 0
-
-  wordArray.forEach (
-    elt => score += lettersStore[elt]?.value
-  )
-
-  return score
 }
 

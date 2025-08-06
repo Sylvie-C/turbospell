@@ -1,35 +1,53 @@
 import { useMemo , useRef , useEffect } from "react"
 
-import { wordScore } from "../utils/functions"
+import { useGameStore } from '../store'
+import { wordScore } from "../utils/wordScore"
+import { detectTodayWord } from "../utils/todayWord"
 
 
 export default function Score ( { foundWordsObj , onGameover } ) { 
 
+  const { todayWord } = useGameStore()
+
   const totalRef = useRef(0)
   const isFirstRender = useRef(true)
 
+
   // Update found words scores
-  const score = useMemo(() => {
+  const score = useMemo( () => {
     if (!foundWordsObj) return 0
         
     return [...foundWordsObj.rowsWords , ...foundWordsObj.colsWords]  // concatenate rows + cols arrays
-      .filter(Boolean)                                  // filter undefined elements
-      .reduce((acc, elt) => acc + wordScore(elt) , 0)   // accumulation of all found words scores, initial value 0
+      .filter(Boolean)  
 
-  }, [foundWordsObj])
+      // accumulation of all found words scores + today word score to initial value 0
+      .reduce((acc, elt) => acc + wordScore(elt) , 0) 
+
+  }, [ foundWordsObj ] )
 
 
-  // Handle total score
+  // Add today word score to found word score -> x2 +1 = x3
+  const todayWordScore = useMemo( () => { 
+    return detectTodayWord(foundWordsObj, todayWord)
+  } , [ foundWordsObj , todayWord ] )
+
+
+  // Update total score
 	useEffect(() => { 
 		// prevent first totalRef update, already initialised immediately at component mount, before useEffect
     if (isFirstRender.current) { isFirstRender.current = false } 
-    else { totalRef.current += score } 
+
+    else { 
+      totalRef.current += (score + todayWordScore) // add today word score if found
+    } 
+
 	}, [score])
+
 
   // Pass total score prop on game over
   useEffect(()=> { 
     onGameover(totalRef.current)
-  }, [onGameover , totalRef.current])
+  }, [ onGameover , totalRef.current ])
 
 
   return (

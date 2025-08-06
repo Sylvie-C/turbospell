@@ -10,7 +10,7 @@ import WordsBoard from "./WordsBoard"
 import {  deleteLetters, lettersPositionsGen , randomLettersGen , 
           convert1Dto2D , convert2Dto1D , movePath , foundWordsIndex , foundWordsStr ,
           lettersInStock } 
-from "../utils/functions"
+from "../utils/gameFunctions"
 
 
 const COLS_NB = 8
@@ -24,11 +24,13 @@ export default function Board () {
     gameStarted , setGameStarted , 
     gamePaused, setGamePaused ,  
     gameOver , setGameOver , 
+
     modalVisible , setModalVisible , 
     modalMessage , setModalMessage , 
+
     mainScore , setMainScore ,
 
-    // letters in stock for footer display (use of availableLettersRef for game logic)
+    // letters in stock for footer display only (use of availableLettersRef for game logic)
     decrementLetterCount , resetLettersStore
   } = useGameStore() 
 
@@ -58,6 +60,7 @@ export default function Board () {
 
   const finalScoreRef = useRef(0)
 
+
   
   // ------- INNER FUNCTIONS -------
 
@@ -76,7 +79,7 @@ export default function Board () {
 
     // update letters store
     newLetters.forEach( letter => { 
-      // for footer display only: availableLettersRef automatically updated with randomLetterGen()
+      // for footer display only: availableLettersRef automatically updated with randomLetterGen() in functions.js file
       decrementLetterCount(letter) 
     })
 
@@ -117,7 +120,7 @@ export default function Board () {
 
     // Object of found words strings in State ({ rowsWords: [string] , colsWords: [string] })
     if (wordsIndex.size > 0) { 
-      const wordsStr = foundWordsStr(wordsList , newBoard , COLS_NB)
+      const wordsStr = foundWordsStr(wordsList , newBoard , COLS_NB) // Array of found words strings
       setWordsFound(wordsStr)
     }
 
@@ -254,8 +257,8 @@ export default function Board () {
 
     // find words string + store in state for display update
     if (wordsIndex.size > 0) { 
-      const wordsStr = foundWordsStr(wordsList , newBoard , COLS_NB)
-      setWordsFound(wordsStr)
+      const wordStr = foundWordsStr(wordsList , newBoard , COLS_NB) // Array of found words strings
+      setWordsFound(wordStr)
     }
 
     newBoard = deleteLetters(wordsIndex , newBoard) 
@@ -283,7 +286,7 @@ export default function Board () {
     const boardAfterMove = await moveUpdates(clickedTiles, boardArray, colsNb) 
 
     // update filled tiles index array after tiles move
-    newFilledTiles = filledTilesUpdate(filledTilesArray , boardAfterMove)
+    newFilledTiles = filledTilesUpdate ( filledTilesArray , boardAfterMove)
     filledTilesRef.current = newFilledTiles
 
     // update spaceLeft State after tiles move (if words)
@@ -295,10 +298,10 @@ export default function Board () {
     if (spaceLeftRef.current >= NEWTILESNB) {
 
       // add new tiles
-      const boardAfterNewTiles = await addNewTiles(boardAfterMove , newFilledTiles , NEWTILESNB)
+      const boardAfterNewTiles = await addNewTiles ( boardAfterMove , newFilledTiles , NEWTILESNB )
 
       // update filled tiles index array after new tiles added
-      newFilledTiles = filledTilesUpdate(newFilledTiles , boardAfterNewTiles)
+      newFilledTiles = filledTilesUpdate ( newFilledTiles , boardAfterNewTiles )
       filledTilesRef.current = newFilledTiles
 
       // update spaceLeft State after new tiles added
@@ -311,8 +314,6 @@ export default function Board () {
 
     else { setGameOver(true) }
   }
-
-
 
   // -------  EVENT LISTENERS  -------
 
@@ -507,7 +508,7 @@ export default function Board () {
           <>
             <p className="text-base sm:text-lg">Bravo ! Vous avez gagné et utilisé toutes les lettres !
               <br/>Votre score est de {finalScoreRef.current} points.<br/>
-              Total parties : {mainScore + finalScoreRef.current} points.
+              <strong>Total parties : {mainScore + finalScoreRef.current} points.</strong>
               <br/>Une autre partie ?
             </p>
             <div className="flex justify-center">
@@ -548,7 +549,7 @@ export default function Board () {
         setModalMessage( 
           <>
             <p className="text-base sm:text-lg">Vous avez perdu. <br/>Votre score est de {finalScoreRef.current} points.<br/>
-            Total parties : {mainScore} points.<br/>
+            <strong>Total parties : {mainScore} points.</strong><br/>
             Une autre partie ?</p>
             <div className="flex justify-center">
               <button 
@@ -581,17 +582,17 @@ export default function Board () {
       <Modal jsxContent={ modalMessage } /> 
 
       <div className="flex flex-col items-center">
-        {/* Timer and Scores */}
+
+        {/* <Timer/> and <Score/> */}
         { gameStarted && 
           <div 
-            className="w-80 sm:w-[512px] p-2 sm:p-0.5 flex justify-around items-center sm:justify-between"
+            className="w-80 sm:w-[512px] sm:p-0.5 flex justify-around items-center sm:justify-between"
           > 
 
             <Timer onTimeout={ handleTimeout } resetTrigger={ resetTimer } freezeTimer={ freezeTimer } />
 
             <div className="flex flex-col gap-1 sm:flex-row sm:gap-x-4">
-              <span className= { `${gameStarted ? "visible" : "invisible"}` } >Total parties : {mainScore} pts</span>
-              { <Score foundWordsObj={ wordsFound } onGameover={ getFinalScore }/> }
+              { <Score foundWordsObj={ wordsFound } onGameover={ getFinalScore } /> }
             </div>
 
           </div>
@@ -621,7 +622,7 @@ export default function Board () {
           }
         </div>
 
-        {/* Letters left */}
+        {/* Letters left mention */}
         { gameStarted && 
           <p>
             Il reste <span className="sm:text-xl font-bold text-cyan-400">

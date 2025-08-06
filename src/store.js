@@ -13,7 +13,6 @@ const initialLettersStore = {
   Y: { nb: 1 , value: 9 },    Z: { nb: 2 , value: 9 } ,
 }
 
-
 export const useGameStore = create(
   ( set ) => ( 
     { 
@@ -24,6 +23,7 @@ export const useGameStore = create(
       mainScore: 0,
       modalVisible: false, 
       modalMessage: "", 
+      todayWord: "", 
 
       lettersStore: initialLettersStore , 
 
@@ -33,6 +33,7 @@ export const useGameStore = create(
       setMainScore: (newScore) => set ( { mainScore: newScore } ) , 
       setModalVisible: (value) => set ( { modalVisible: value } ) , 
       setModalMessage: (value) => set ( { modalMessage: value } ) , 
+      setTodayWord: (value) => set ( { todayWord: value } ) ,
 
       updateLetterCount: (letter, newCount) =>
         set((state) => ({

@@ -63,7 +63,11 @@ export default function Timer ( { onTimeout, resetTrigger, freezeTimer } ) {
 
 
   return (
-    <div className={ `sm:text-xl font-bold ${timeLeft < 10 ? "text-red-600" : "text-cyan-400"} ${ gameOver && "invisible" }` }>
+    <div className={ `
+      sm:text-xl font-bold 
+      ${timeLeft < 10 ? "text-red-600" : "text-cyan-400"} 
+      ${ gameOver && "invisible" }
+    ` }>
       ⏳ { formatTime(timeLeft) }
     </div>
   )
