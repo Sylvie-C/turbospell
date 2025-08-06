@@ -12,6 +12,7 @@ import {  deleteLetters, lettersPositionsGen , randomLettersGen ,
           lettersInStock } 
 from "../utils/functions"
 
+
 const COLS_NB = 8
 const NEWTILESNB = 3
 const STORELETTERS = lettersInStock()

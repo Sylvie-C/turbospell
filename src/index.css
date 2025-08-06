@@ -1,4 +1,4 @@
-@import 'tailwindcss'; 
+@import "tailwindcss";
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -15,23 +15,25 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 body {
-  width: 100%; 
-  margin: 0; 
+  max-width: 1440px;
+  margin: 0 auto;
 }
-
 
 @theme {
   /* New tile animation */
   @keyframes blink {
-    0%, 100% { background-color: white; }
-    50% { background-color: #4A148C; }    /* Purple-900 */
+    0%,
+    100% {
+      background-color: white;
+    }
+    50% {
+      background-color: #4a148c;
+    } /* Purple-900 */
   }
 
   --animate-blink: blink 300ms ease-in-out 3;
 }
-
 
 @media (prefers-color-scheme: light) {
   :root {
