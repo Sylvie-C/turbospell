@@ -71,7 +71,7 @@ const randomLetterGen = (lettersArray) => {
   Params: 
     - lettersNb: number of letters to pickup, 
     - storeLetters: array of available letters (e.g.: ["A","A","A", ... ]) based on Zustand store. 
-    Use this array instead of Zustand letterStore[letter].nb value due to letters pickup probability and user experience, 
+    !!! Use this array instead of Zustand letterStore[letter].nb value due to letters pickup probability and user experience, 
   Return: Array of letters [string]. 
 */
 export const randomLettersGen = (lettersNb , storeLetters) => { 

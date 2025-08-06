@@ -26,14 +26,20 @@ export default function Board () {
     gameOver , setGameOver , 
     modalVisible , setModalVisible , 
     modalMessage , setModalMessage , 
-    mainScore , setMainScore
+    mainScore , setMainScore ,
+
+    // letters in stock for footer display (use of availableLettersRef for game logic)
+    decrementLetterCount , resetLettersStore
   } = useGameStore() 
 
   const [ wordsList , setWordsList ] = useState(null)
-  
-  const [ tilesContent , setTilesContent ] = useState ( Array(64).fill("") )
 
-  const availableLettersRef = useRef([...STORELETTERS])
+  const [ tilesContent , setTilesContent ] = useState ( Array(COLS_NB**2).fill("") )
+
+  /* availableLettersRef array of every letter available is used for game logic, due to letter pickup probabilities. 
+    Zustand store is used separately for <Footer /> display. 
+  */
+  const availableLettersRef = useRef([...STORELETTERS]) 
 
   const filledTilesRef = useRef([])
   const spaceLeftRef = useRef(COLS_NB**2)
@@ -41,7 +47,7 @@ export default function Board () {
   const [ resetTimer , setResetTimer ] = useState(false)
   const [ freezeTimer , setFreezeTimer ] = useState(false)
 
-  const [ isNew , setIsNew ] = useState(null)               // array of new tiles 1D position index (for animation)
+  const [ isNew , setIsNew ] = useState(null)   // array of new tiles 1D position index (for animation)
   const [ isDeleted , setIsDeleted ] = useState(null)       // array of deleted tiles index (for animation)
 
   const tileClickCountRef = useRef(0)
@@ -68,6 +74,12 @@ export default function Board () {
     // pickup letters from store
     const newLetters = randomLettersGen(lettersNb , availableLettersRef.current) 
 
+    // update letters store
+    newLetters.forEach( letter => { 
+      // for footer display only: availableLettersRef automatically updated with randomLetterGen()
+      decrementLetterCount(letter) 
+    })
+
     // new tiles index (where empty tiles)
     const newPositions = lettersPositionsGen(lettersNb , filledTilesArray , COLS_NB) 
 
@@ -81,7 +93,6 @@ export default function Board () {
 
     return { newIndex: newPositions , newContent: newTilesContent }
   } 
-
 
   /* Function to add 3 new tiles then delete existing words from Board. 
     - Params: current board, board index of not empty tiles. 
@@ -378,7 +389,8 @@ export default function Board () {
   const startNewGame = () => { 
     setTilesContent (Array(64).fill(""))
 
-    availableLettersRef.current = [...STORELETTERS]
+    availableLettersRef.current = [...STORELETTERS] // reset letters store for game logic
+    resetLettersStore() // reset letters store for footer display
 
     setClickedTiles(
       prev => ({
@@ -612,8 +624,11 @@ export default function Board () {
         {/* Letters left */}
         { gameStarted && 
           <p>
-            Il reste <span className="sm:text-xl font-bold text-cyan-400">{availableLettersRef.current.length}</span> lettres.
-          </p>}
+            Il reste <span className="sm:text-xl font-bold text-cyan-400">
+              {availableLettersRef.current.length}
+            </span> lettres.
+          </p>
+        }
       </div>
 
       <WordsBoard foundWordsObj={ wordsFound } />
