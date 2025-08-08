@@ -53,7 +53,7 @@ export default function Score ( { foundWordsObj , onGameover } ) {
   return (
     <p className= {`${ foundWordsObj ? "visible" : "invisible" } rounded-2xl px-2 text-bg-purple-900 dark:text-purple-200 bg-purple-200 dark:bg-purple-900`} 
     >
-      Mot : { score } pts / Total : { totalRef.current } pts.
+      Mot : { score + todayWordScore } pts / Total : { totalRef.current } pts.
     </p>
   )
 }
