@@ -62,6 +62,7 @@ export default function App() {
           className={`
             ${ gameOver && "pointer-events-none"}
             my-2 py-1 px-2 border-2 rounded-2xl hover:cursor-pointer hover:transition-colors 
+            transition-all duration-300 ease-in-out
             dark:hover:bg-violet-300 dark:hover:text-violet-900 dark:hover:border-violet-900
             hover:bg-violet-900 hover:text-violet-300 hover:border-violet-300
           bg-violet-300 text-violet-900 border-violet-900 
