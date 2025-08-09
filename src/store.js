@@ -24,6 +24,7 @@ export const useGameStore = create(
       modalVisible: false, 
       modalMessage: "", 
       todayWord: "", 
+      saveScore: false, 
 
       lettersStore: initialLettersStore , 
 
@@ -34,6 +35,7 @@ export const useGameStore = create(
       setModalVisible: (value) => set ( { modalVisible: value } ) , 
       setModalMessage: (value) => set ( { modalMessage: value } ) , 
       setTodayWord: (value) => set ( { todayWord: value } ) ,
+      setSaveScore: (value) => set ( { saveScore: value } ) , 
 
       updateLetterCount: (letter, newCount) =>
         set((state) => ({

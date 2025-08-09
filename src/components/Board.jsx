@@ -24,6 +24,7 @@ export default function Board () {
     gameStarted , setGameStarted , 
     gamePaused, setGamePaused ,  
     gameOver , setGameOver , 
+    setSaveScore , 
 
     modalVisible , setModalVisible , 
     modalMessage , setModalMessage , 
@@ -405,6 +406,7 @@ export default function Board () {
     tileClickCountRef.current = 0
     finalScoreRef.current = 0
 
+    // New game resets
     setResetTimer(false)
     setIsSelected(null)
     setIsNew(null)
@@ -522,6 +524,17 @@ export default function Board () {
               >
                 OK
               </button>
+
+              <button 
+                onClick={ () => { setModalVisible(false); setSaveScore(true); } }
+                className="m-2 px-2 
+                  hover:cursor-pointer hover:transition-colors hover:bg-violet-300 hover:text-violet-900 hover:border-violet-900
+                  bg-violet-900 text-violet-300 border-violet-300 border-2 rounded-2xl
+                  text-base sm:text-lg
+                "
+              >
+                NON / QUITTER
+              </button>
             </div>
           </>
         )
@@ -562,11 +575,21 @@ export default function Board () {
               >
                 OK
               </button>
+              <button 
+                onClick={ () => { setModalVisible(false); setSaveScore(true); } }
+                className="m-2 px-2 
+                  hover:cursor-pointer hover:transition-colors hover:bg-violet-300 hover:text-violet-900 hover:border-violet-900
+                  bg-violet-900 text-violet-300 border-violet-300 border-2 rounded-2xl
+                  text-base sm:text-lg
+                "
+              >
+                NON / QUITTER
+              </button>
             </div>
           </>
         )
 
-        setMainScore (0)
+        // setMainScore (0)
       }
 
       setModalVisible(gameOver)

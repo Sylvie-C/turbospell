@@ -3,6 +3,7 @@ import { getWordOfTheDay } from './utils/todayWord'
 
 import Header from './components/Header'
 import Board from './components/Board'
+import RecordScore from './components/RecordScore'
 import Footer from './components/Footer'
 
 
@@ -13,8 +14,8 @@ export default function App() {
     gameStarted, setGameStarted , 
     gamePaused , setGamePaused , 
     todayWord , setTodayWord, 
-
     mainScore , 
+    saveScore ,
   } = useGameStore()
 
   const startGame = () => { 
@@ -24,15 +25,16 @@ export default function App() {
     const todayWord = getWordOfTheDay()
     setTodayWord(todayWord)
   }
+
   const pauseGame = () => { 
     setGamePaused(true)
   }
-
   
+
   return (
     <>
       <Header />
-      <main className="m-2 flex flex-col items-center text-sm sm:text-base">
+      <main className="relative m-2 flex flex-col items-center text-sm sm:text-base">
 
         {/* Word of the day */}
         { gameStarted &&
@@ -80,6 +82,9 @@ export default function App() {
           <Board />
           { (gamePaused || !gameStarted) && <div className="absolute inset-0 bg-black/50"></div> }
         </div>
+
+        {/* Record Score modal */}
+        { (gameOver && saveScore && Number(mainScore) > 0) && <RecordScore score={mainScore} /> }
 
       </main>
       <Footer/>

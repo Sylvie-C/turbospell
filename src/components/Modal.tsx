@@ -3,12 +3,15 @@ import { useGameStore } from "../store"
 
 export default function Modal ( { jsxContent } ) {
 
-  const { modalVisible , setModalVisible } = useGameStore()
+  const { 
+    modalVisible , setModalVisible ,
+    setSaveScore , 
+  } = useGameStore()
 
   const handleCloseModal = () => { 
     if (modalVisible) setModalVisible(false)
+    setSaveScore(false)   // hide save score to database form
   }
-
 
   return (
     modalVisible && 
