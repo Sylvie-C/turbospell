@@ -426,7 +426,7 @@ export default function Board () {
   // fetch words list on component mount
   useEffect(() => {
     const loadWords = async () => {   
-      const response = await fetch(`${import.meta.env.VITE_API_URL}liste_mots.txt`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/liste_mots.txt`)
       const text = await response.text()
 
       const wordsArray = text.split('\n').map(word => word.trim())

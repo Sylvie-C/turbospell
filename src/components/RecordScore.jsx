@@ -14,25 +14,13 @@ export default function RecordScore ( { score } ) {
     setSaveScore, saveScore ,
     modalVisible , setModalVisible , 
     modalMessage , setModalMessage , 
-
-
-    // pour les tests
-    mainScore , 
-
-
   } = useGameStore()
-
-
-
-  console.log ("main score from <RecordScore />" , mainScore)
-
-
 
 
   const saveScoreToDB = async (data) => { 
 
     const response = await fetch (
-      `${import.meta.env.VITE_BACKEND_URL}/api/record`, 
+      `${import.meta.env.VITE_BACKEND_URL}/record`, 
       {
         method: "POST",
         headers: {
