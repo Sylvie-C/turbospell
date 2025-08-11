@@ -34,7 +34,7 @@ export default function App() {
   return (
     <>
       <Header />
-      <main className="relative m-2 flex flex-col items-center text-sm sm:text-base">
+      <main className="relative mx-auto flex flex-col items-center text-sm sm:text-base">
 
         {/* Word of the day */}
         { gameStarted &&

@@ -1,4 +1,6 @@
 import { useState } from "react"
+import DOMPurify from "dompurify"
+
 import { useGameStore } from "../store"
 
 import Modal from "./Modal"
@@ -50,10 +52,22 @@ export default function RecordScore ( { score } ) {
   }
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault() 
 
     const formData = new FormData(event.target)
-    const pseudo = formData.get("pseudo")
+
+    let pseudo = formData.get("pseudo")
+
+    // Purify pseudo input
+    pseudo = DOMPurify.sanitize(pseudo)
+
+    // Prevent too long string
+    if (pseudo.length > 30) {
+      setErrorMsg( "Pseudo trop long" ) 
+      return
+    }
+
+    // get score number
     const score = Number(formData.get("score"))
 
     await saveScoreToDB({ pseudo, score })
@@ -66,9 +80,9 @@ export default function RecordScore ( { score } ) {
       : 
       {/* Save record modal */} 
       { saveScore } && 
-      <div className="absolute top-0 left-0 w-screen h-screen bg-black/50 flex items-center justify-center">
+      <div className="absolute top-0 left-0 w-screen h-screen bg-black/50 flex justify-center">
 
-        <div className="bg-purple-200 text-purple900 dark:bg-purple-900 dark:text-purple-200 p-4 rounded shadow-md flex flex-col items-center gap-4">
+        <div className="w-fit h-fit mt-24 bg-purple-200 text-purple900 dark:bg-purple-900 dark:text-purple-200 p-4 rounded shadow-md flex flex-col items-center gap-4">
     
           <p>Ajouter score au classement (total parties) ?</p>
     
@@ -120,7 +134,7 @@ export default function RecordScore ( { score } ) {
           }
 
           {/* Error message */}
-          { errorMsg && <p className="text-red-700"> { errorMsg } </p>}
+          { errorMsg && <p className="bg-yellow-200 text-red-800 font-bold"> { errorMsg } </p>}
     
         </div>
 
