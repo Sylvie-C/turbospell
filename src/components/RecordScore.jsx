@@ -75,70 +75,72 @@ export default function RecordScore ( { score } ) {
 
   return ( 
     <>
-      {/* Confirm record saved modal */}
-      { modalVisible } ? <Modal jsxContent={ modalMessage } />
-      : 
-      {/* Save record modal */} 
-      { saveScore } && 
-      <div className="absolute top-0 left-0 w-screen h-screen bg-black/50 flex justify-center">
+      {/* Confirm if save record */}
+      { modalVisible ? 
+          <Modal jsxContent={ modalMessage } />
+        : 
+          /* If modal not visible and if save record confirm, show form */
+          saveScore && 
+          <div className="absolute top-0 left-0 w-screen h-screen bg-black/50 flex justify-center">
 
-        <div className="w-fit h-fit mt-24 bg-purple-200 text-purple900 dark:bg-purple-900 dark:text-purple-200 p-4 rounded shadow-md flex flex-col items-center gap-4">
-    
-          <p>Ajouter score au classement (total parties) ?</p>
-    
-          {/* Record score confirm Modal (Yes / No) */}
-          <div className="flex">
-            <button 
-              onClick= { () => setDisplayForm(true) }
-              className="m-2 px-2 
-                hover:cursor-pointer hover:transition-colors border-2 rounded-2xl text-base sm:text-lg
-                hover:bg-violet-300 hover:text-violet-900 hover:border-violet-900
-                bg-violet-900 text-violet-300 border-violet-300"
-            >
-              OK
-            </button>
-            <button 
-              onClick= { () => { setDisplayForm(false); setSaveScore(false); } }
-              className="m-2 px-2 
-                hover:cursor-pointer hover:transition-colors border-2 rounded-2xl text-base sm:text-lg
-                hover:bg-violet-300 hover:text-violet-900 hover:border-violet-900
-                bg-violet-900 text-violet-300 border-violet-300"
-            >
-              Non / Quitter
-            </button>
+            <div className="w-fit h-fit mt-24 bg-purple-200 text-purple900 dark:bg-purple-900 dark:text-purple-200 p-4 rounded shadow-md flex flex-col items-center gap-4">
+        
+              <p>Ajouter score au classement ({score} pts) ?</p>
+        
+              {/* Record score confirm Modal (Yes / No) */}
+              <div className="flex">
+                <button 
+                  onClick= { () => setDisplayForm(true) }
+                  className="m-2 px-2 
+                    hover:cursor-pointer hover:transition-colors border-2 rounded-2xl text-base sm:text-lg
+                    hover:bg-violet-300 hover:text-violet-900 hover:border-violet-900
+                    bg-violet-900 text-violet-300 border-violet-300"
+                >
+                  OK
+                </button>
+                <button 
+                  onClick= { () => { setDisplayForm(false); setSaveScore(false); } }
+                  className="m-2 px-2 
+                    hover:cursor-pointer hover:transition-colors border-2 rounded-2xl text-base sm:text-lg
+                    hover:bg-violet-300 hover:text-violet-900 hover:border-violet-900
+                    bg-violet-900 text-violet-300 border-violet-300"
+                >
+                  Non / Quitter
+                </button>
+              </div>
+        
+              {/* Form */}
+              { displayForm && 
+                <form 
+                  onSubmit={ handleSubmit } 
+                  className= {`transition-all duration-300 ease-in-out origin-top scale-y-0
+                    ${ displayForm ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0" }
+                  `} 
+                >
+            
+                  <input type="hidden" name="score" value={score} />
+                  <label htmlFor="pseudo" className="block mb-2">Entrez votre pseudo :</label>
+                  <input type="text" name="pseudo" id="pseudo" className="p-2 border border-gray-300 rounded" required />
+            
+                  <button 
+                    type="submit" 
+                    className="m-2 px-2 
+                      hover:cursor-pointer hover:transition-colors border-2 rounded-2xl text-base sm:text-lg
+                      hover:bg-violet-300 hover:text-violet-900 hover:border-violet-900
+                      bg-violet-900 text-violet-300 border-violet-300"
+                  >
+                    OK
+                  </button>
+                </form>
+              }
+
+              {/* Error message */}
+              { errorMsg && <p className="bg-yellow-200 text-red-800 font-bold"> { errorMsg } </p>}
+        
+            </div>
+
           </div>
-    
-          {/* Form */}
-          { displayForm && 
-            <form 
-              onSubmit={ handleSubmit } 
-              className= {`transition-all duration-300 ease-in-out origin-top scale-y-0
-                ${ displayForm ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0" }
-              `} 
-            >
-        
-              <input type="hidden" name="score" value={score} />
-              <label htmlFor="pseudo" className="block mb-2">Entrez votre pseudo :</label>
-              <input type="text" name="pseudo" id="pseudo" className="p-2 border border-gray-300 rounded" required />
-        
-              <button 
-                type="submit" 
-                className="m-2 px-2 
-                  hover:cursor-pointer hover:transition-colors border-2 rounded-2xl text-base sm:text-lg
-                  hover:bg-violet-300 hover:text-violet-900 hover:border-violet-900
-                  bg-violet-900 text-violet-300 border-violet-300"
-              >
-                OK
-              </button>
-            </form>
-          }
-
-          {/* Error message */}
-          { errorMsg && <p className="bg-yellow-200 text-red-800 font-bold"> { errorMsg } </p>}
-    
-        </div>
-
-      </div>
+      }
     </>
   )
 }
