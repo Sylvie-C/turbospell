@@ -566,7 +566,7 @@ export default function Board () {
             Une autre partie ?</p>
             <div className="flex justify-center">
               <button 
-                onClick={ startNewGame } 
+                onClick={ () => { startNewGame (); setMainScore(0); } } 
                 className="m-2 px-2 
                 hover:cursor-pointer hover:transition-colors hover:bg-violet-300 hover:text-violet-900 hover:border-violet-900
                 bg-violet-900 text-violet-300 border-violet-300 border-2 rounded-2xl
