@@ -50,7 +50,7 @@ export default function Header () {
   
         {/* Text rules */}
         <div className= { ` h-full bg-purple-200 text-purple-900 dark:bg-purple-900 dark:text-purple-200 rounded-2xl p-2 text-sm sm:text-base text-justify 
-          ${ !showRules && "bg-gradient-to-t from-purple-900 dark:from-purple-200 via-transparent to-transparent" } 
+          ${ !showRules && "bg-linear-to-t from-purple-900 dark:from-purple-200 via-transparent to-transparent" } 
         ` } >
 
           <p>Le but de ce jeu est de former des mots de 5 lettres minimum, en déplaçant des lettres sur le tableau, en 1mn, ce qui permet de comptabiliser des points. </p>
