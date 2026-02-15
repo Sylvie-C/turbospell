@@ -1,7 +1,7 @@
 import { useState , useEffect } from "react"
 
-import logoSmall from '../assets/logo_92x75.webp'
-import logoLarge from '../assets/logo_210x172.webp'
+import logoSmall from '/assets/logo_92x75.webp'
+import logoLarge from '/assets/logo_210x172.webp'
 
 export default function Header () { 
 
